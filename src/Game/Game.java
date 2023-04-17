@@ -16,14 +16,21 @@ package Game;
  */
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A simple card game where the goal is to draw the highest card from a shuffled deck.
  */
 public class Game {
 
+    private static void main(String[] args) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     private final List<Card> deck;
+    private Object Assertions;
 
     /**
      * Creates a new Game object with a shuffled deck of 52 standard playing cards.
@@ -123,6 +130,131 @@ public class Game {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+    
+   /**
+     * Test of draw method, of class Game.
+     */
+    public void testDraw() {
+        int initialDeckSize = game.deckSize();
+        Card drawnCard = game.draw();
+        Assertions.assertNotNull(drawnCard);
+        Assertions.assertEquals(initialDeckSize - 1, game.deckSize());
+    }
+
+   /**
+     * Test of DrawFromEmptyDeck method, of class Game.
+     */
+    public void testDrawFromEmptyDeck() {
+        Game game = new Game();
+        for (int i = 0; i < 52; i++) {
+            game.draw();
+        }
+        Assertions.assertThrows(IllegalStateException.class, game::draw);
+    }
+
+    /**
+     * Test of DeckSize method, of class Game.
+     */
+    public void testDeckSize() {
+        Game game = new Game();
+        Assertions.assertEquals(52, game.deckSize());
+        for (int i = 0; i < 10; i++) {
+            game.draw();
+        }
+        Assertions.assertEquals(42, game.deckSize());
+    }
+
+    /**
+     * Test of Play method, of class Game.
+     */
+    public void testPlay() {
+        int numPlayers = 4;
+        int winningPlayer = game.play(numPlayers);
+        Assertions.assertTrue(winningPlayer >= 0 && winningPlayer <= numPlayers, "winning player index is out of range");
+    }
+
+    /**
+     * Test of PlayWithTwoPlayers method, of class Game.
+     */
+    
+    public void testPlayWithTwoPlayers() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> game.play(1));
+        int winningPlayer = game.play(2);
+        Assertions.assertTrue(winningPlayer == 1 || winningPlayer == 2 || winningPlayer == 0, "unexpected winning player index");
+    }
+
+   /**
+     * Test of PlayWithFiftyPlayers method, of class Game.
+     */
+    public void testPlayWithFiftyPlayers() {
+        int numPlayers = 50;
+        int winningPlayer = game.play(numPlayers);
+        Assertions.assertTrue(winningPlayer >= 0 && winningPlayer <= numPlayers, "winning player index is out of range");
+    }
+
+    /**
+     * Test of PlayWithAllPlayers method, of class Game.
+     */
+    public void testPlayWithAllSameCards() {
+        Set<Card> allSameCards = new HashSet<>();
+        for (Rank rank : Rank.values()) {
+            for (Suit suit : Suit.values()) {
+                allSameCards.add(new Card(rank, suit));
+            }
+        }
+        Game game = new Game();
+        game.deck.clear();
+        game.deck.addAll(allSameCards);
+        int winningPlayer = game.play(5);
+        Assertions.assertEquals(0, winningPlayer, "all same cards but not a draw");
+    }
+
+    /**
+     * Test of PlayWithAllDifferentCards method, of class Game.
+     */
+    
+    public void testPlayWithAllDifferentCards() {
+        Game game = new Game();
+        game.deck.clear();
+        for (Rank rank : Rank.values()) {
+            for (Suit suit : Suit.values()) {
+                game.deck.add(new Card(rank, suit));
+            }
+        }
+        int winningPlayer = game.play(5);
+        Assertions.assertNotEquals(0, winningPlayer, "all different cards but a draw");
+    }
+
+    private void assertEquals(Card expResult, Card result) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void assertEquals(int expResult, int result) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void fail(String the_test_case_is_a_prototype) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private static class game {
+
+        private static int deckSize() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        private static Card draw() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        private static int play(int numPlayers) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        public game() {
+        }
+    }
+}
 
     private void fail(String the_test_case_is_a_prototype) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
